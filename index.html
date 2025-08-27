@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Math Ma MQC Shift Sign-In</title>
+</head>
+<body>
+  <!-- ...CSS and HTML as before... -->
+  <form id="signinform" class="hidden">
+    <label for="name">Name:</label>
+    <input name="name" id="name" required autocomplete="name" maxlength="64">
+    <button type="submit">Sign In</button>
+  </form>
+  <div id="status"></div>
+  <script>
+    // === CONFIGURE YOUR SITE LOCATION & FENCE HERE ===
+const CENTER_LAT = 42.3763663;        // replace with your office latitude
+const CENTER_LON = -71.1167299;       // replace with your office longitude
+const RADIUS_METERS = 10;         // allowable geofence radius in meters
+
+// Haversine formula to compute distance in meters
+function distanceMeters(lat1, lon1, lat2, lon2) {
+  const R = 6371000; // meters
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLon = (lon2-lon1) * Math.PI/180;
+  const a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+let userLat = null, userLon = null;
+
+// Run when page loads
+if ("geolocation" in navigator) {
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      userLat = pos.coords.latitude;
+      userLon = pos.coords.longitude;
+      // Distance from job site (in meters)
+      const dist = distanceMeters(userLat, userLon, CENTER_LAT, CENTER_LON);
+      if (dist <= RADIUS_METERS) {
+        // User is inside the geofence
+        showForm();
+      } else {
+        // User is outside the geofence
+        showError(`You are not within the allowed location for sign-in (distance: ${Math.round(dist)}m).`);
+      }
+    },
+    err => {
+      if (err.code === 1) {
+        showError("Location access denied. Please allow location to sign in.");
+      } else {
+        showError("Unable to determine your location. Please try again.");
+      }
+    }
+  );
+} else {
+  showError("Geolocation not supported on this device/browser.");
+}
+    // Set these!
+    const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw_S7zamGVfLF_ebliYynfz7xF0M465hPaJLoPPdRv2S_6vbE31uPZFY7X0XkZJDY4Ukw/exec';
+
+    // During submit:
+    form.onsubmit = async function(e) {
+      e.preventDefault();
+      // ... Get geolocation, check radius, etc, as before ...
+      const data = {
+        name: form.name.value,
+        empid: form.empid.value,
+        latitude: userLat,
+        longitude: userLon
+      };
+      // Now, post to Google Apps Script webapp!
+      try {
+        statusDiv.textContent = "Submitting...";
+        let resp = await fetch(WEBAPP_URL, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {"Content-Type":"application/json"}
+        });
+        if (resp.ok) {
+          statusDiv.textContent = "Thank you, you've signed in!";
+          form.classList.add('hidden');
+        } else {
+          statusDiv.textContent = "Submission failed! Try again.";
+        }
+      } catch (e) {
+        statusDiv.textContent = "Network error: could not submit.";
+      }
+    };
+  </script>
+</body>
+</html>
