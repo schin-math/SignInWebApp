@@ -2,18 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-
-interface Location {
-	latitude: number
-	longitude: number
-}
-
-const TARGET_LOCATION: Location = {
-	latitude: 42.3601,
-	longitude: -71.0942
-}
-
-const PROXIMITY_RADIUS_FEET = 5280000000
+import { TARGET_LOCATION, PROXIMITY_RADIUS_FEET, GOOGLE_FORM_URL } from './constants'
+import { Location } from './types'
 
 export default function CheckInPage() {
 	const [location, setLocation] = useState<Location | null>(null)
@@ -128,7 +118,7 @@ export default function CheckInPage() {
 							</div>
 							<div className="border rounded-lg overflow-hidden">
 								<iframe
-									src={`https://docs.google.com/forms/d/e/1FAIpQLSeuvdRUrD1d3-CN9mnRHIjU95T_u1U-OTUKOUmlCSdqK0s6LQ/viewform?embedded=true&usp=pp_url&entry.1195172112=${location?.latitude},${location?.longitude}`}
+									src={`${GOOGLE_FORM_URL}`}
 									width="100%"
 									height="600"
 									frameBorder="0"
@@ -164,7 +154,7 @@ export default function CheckInPage() {
 							<div id="fallback-form" style={{ display: 'none' }}>
 								<div className="border rounded-lg overflow-hidden">
 									<iframe
-										src={`https://docs.google.com/forms/d/e/1FAIpQLSeuvdRUrD1d3-CN9mnRHIjU95T_u1U-OTUKOUmlCSdqK0s6LQ/viewform?embedded=true&usp=pp_url&entry.1195172112=${location?.latitude},${location?.longitude}`}
+										src={`${GOOGLE_FORM_URL}`}
 										width="100%"
 										height="600"
 										frameBorder="0"

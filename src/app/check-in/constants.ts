@@ -1,0 +1,13 @@
+import { Location } from "./types"
+
+// Location of the office. 
+export const TARGET_LOCATION: Location = {
+	latitude: 42.3601,
+	longitude: -71.0942
+}
+
+// Proximity radius that the user needs to be relative to TARGET_LOCATION.
+export const PROXIMITY_RADIUS_FEET = 5280000000
+
+// Google form URL.
+export const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeuvdRUrD1d3-CN9mnRHIjU95T_u1U-OTUKOUmlCSdqK0s6LQ/viewform?embedded=true&usp=pp_url&entry.1195172112="
