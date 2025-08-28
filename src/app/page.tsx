@@ -137,7 +137,7 @@ export default function CheckInPage() {
 							<h2 className="text-xl font-semibold text-red-700 mb-2">You are not in range</h2>
 							<p className="text-gray-600 mb-4">You need to be within {PROXIMITY_RADIUS_FEET} feet of the target location to check in normally.</p>
 
-							<Button
+							{/* <Button
 								onClick={() => {
 									// Show the form anyway
 									const formSection = document.getElementById('fallback-form')
@@ -149,9 +149,9 @@ export default function CheckInPage() {
 								className="mb-4"
 							>
 								Submit Anyway
-							</Button>
+							</Button> */}
 
-							<div id="fallback-form" style={{ display: 'none' }}>
+							{/* <div id="fallback-form" style={{ display: 'none' }}>
 								<div className="border rounded-lg overflow-hidden">
 									<iframe
 										src={`${GOOGLE_FORM_URL}`}
@@ -165,7 +165,7 @@ export default function CheckInPage() {
 										Loading form...
 									</iframe>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					)}
 
