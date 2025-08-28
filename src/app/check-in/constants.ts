@@ -10,4 +10,4 @@ export const TARGET_LOCATION: Location = {
 export const PROXIMITY_RADIUS_FEET = 5280000000
 
 // Google form URL.
-export const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeuvdRUrD1d3-CN9mnRHIjU95T_u1U-OTUKOUmlCSdqK0s6LQ/viewform?embedded=true&usp=pp_url&entry.1195172112="
+export const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSePJv9QmBMprzOAfTIysRR_vk9cRzOZp1jYbtQ4gHN7YDgb1w/viewform?usp=dialog"
