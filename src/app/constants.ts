@@ -7,7 +7,7 @@ export const TARGET_LOCATION: Location = {
 }
 
 // Proximity radius that the user needs to be relative to TARGET_LOCATION.
-export const PROXIMITY_RADIUS_FEET = 1000
+export const PROXIMITY_RADIUS_FEET = 500
 
 // Google form URL.
 export const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSePJv9QmBMprzOAfTIysRR_vk9cRzOZp1jYbtQ4gHN7YDgb1w/viewform?usp=dialog"

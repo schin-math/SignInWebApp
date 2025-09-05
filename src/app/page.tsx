@@ -67,12 +67,11 @@ export default function CheckInPage() {
 		if (!location) return '📍 Location not detected'
 
 		const distanceInFeet = calculateDistance(location.latitude, location.longitude, TARGET_LOCATION.latitude, TARGET_LOCATION.longitude)
-		const distanceInMiles = (distanceInFeet / 5280).toFixed(1)
 		const isWithin = distanceInFeet <= PROXIMITY_RADIUS_FEET
 
 		return isWithin
 			? `Within range`
-			: `You are ${distanceInMiles}mi away from the target location`
+			: `You are ${Math.round(distanceInFeet)}ft away from the target location`
 	}
 
 	const isInRange = location && isWithinProximity(location.latitude, location.longitude)
@@ -99,13 +98,7 @@ export default function CheckInPage() {
 						{locationError && (
 							<div className="mb-4">
 								<p className="text-amber-600 text-sm mb-2">{locationError}</p>
-								<Button
-									onClick={getCurrentLocation}
-									variant="outline"
-									size="sm"
-								>
-									Retry
-								</Button>
+								<p className="text-amber-700 text-sm font-semibold">Please enable location services and reload this page</p>
 							</div>
 						)}
 					</div>
@@ -132,10 +125,11 @@ export default function CheckInPage() {
 						</div>
 					)}
 
-					{!isInRange && !isLoadingLocation && (
+						{!isInRange && !isLoadingLocation && !locationError && (
 						<div className="text-center">
 							<h2 className="text-xl font-semibold text-red-700 mb-2">You are not in range</h2>
 							<p className="text-gray-600 mb-4">You need to be within {PROXIMITY_RADIUS_FEET} feet of the target location to check in normally.</p>
+							<p className="text-amber-700 text-sm font-semibold">Once you are within range of your MQC room, please reload this page.</p>
 
 							{/* <Button
 								onClick={() => {
